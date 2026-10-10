@@ -1,4 +1,7 @@
+ml/data/
+ml/data/*.json
+ml/data/raw/*.json
 ml/data/raw_records/*.json
 ml/data/raw_episodes/*.json
-ml/data/raw/*.json
+
 .DS_Store
