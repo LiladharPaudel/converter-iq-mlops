@@ -2,3 +2,11 @@ ml/data/raw_records/*.json
 ml/data/raw_episodes/*.json
 ml/data/raw/*.json
 .DS_Store
+
+# mock-up
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+dist/
