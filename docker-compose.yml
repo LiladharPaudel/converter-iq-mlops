@@ -1,0 +1,10 @@
+services:
+  api:
+    build: ./backend
+    ports: ["8000:8000"]
+    environment:
+      - MODEL_VERSION=rules-v0
+  web:
+    build: ./frontend
+    ports: ["5173:80"]
+    depends_on: [api]
