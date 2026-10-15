@@ -1,0 +1,10 @@
+{
+  "sample_id": "validation_sample_001",
+  "diagnosis": "Healthy / Nominal Operation",
+  "confidence_assessment": "high",
+  "explanation": "The CNN predicts healthy operation (fault_id 0) with confidence 1.000. The three-phase RMS values are A=1431.40, B=1401.02, C=1416.50, with phase imbalance of approximately 1.08%.",
+  "uncertainty": "Low uncertainty. The leading prediction is clearly separated from the alternatives.",
+  "recommended_next_step": "No fault-specific action is indicated. Continue normal monitoring.",
+  "needs_more_data": false,
+  "sources": []
+}

@@ -1,0 +1,10 @@
+{
+  "sample_id": "validation_sample_003",
+  "diagnosis": "Uncertain fault classification",
+  "confidence_assessment": "low",
+  "explanation": "The CNN's top prediction is fault_id 33 with probability 0.159, while fault_id 37 has probability 0.159. The top predictions are too close to support a reliable fine-grained diagnosis. The measured phase imbalance is approximately 49.97%.",
+  "uncertainty": "High uncertainty. The classifier has low confidence and the leading fault classes are nearly tied.",
+  "recommended_next_step": "Review the waveform and retrieve additional technical documentation or measurements before making a fault-specific decision.",
+  "needs_more_data": true,
+  "sources": []
+}

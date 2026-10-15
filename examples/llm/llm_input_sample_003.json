@@ -1,0 +1,35 @@
+{
+  "sample_id": "validation_sample_003",
+  "model_output": {
+    "top_predictions": [
+      {
+        "fault_id": 33,
+        "probability": 0.158746138215065
+      },
+      {
+        "fault_id": 37,
+        "probability": 0.15873463451862335
+      },
+      {
+        "fault_id": 34,
+        "probability": 0.1568431258201599
+      }
+    ],
+    "top1_confidence": 0.158746138215065,
+    "top1_top2_margin": 1.150369644165039e-05
+  },
+  "signal_features": {
+    "rms": {
+      "phase_a": 35313200.0,
+      "phase_b": 92890992.0,
+      "phase_c": 57617376.0
+    },
+    "phase_imbalance_percent": 49.96804428100586,
+    "dominant_harmonics": [],
+    "thd_percent": null
+  },
+  "uncertainty": {
+    "low_confidence": true,
+    "close_top_classes": true
+  }
+}

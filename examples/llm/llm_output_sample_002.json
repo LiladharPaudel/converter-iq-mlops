@@ -1,0 +1,10 @@
+{
+  "sample_id": "validation_sample_002",
+  "diagnosis": "Likely Fault 12",
+  "confidence_assessment": "high",
+  "explanation": "The CNN's leading prediction is fault_id 12 with confidence 1.000. The three-phase RMS values are A=2451.71, B=2491.93, C=2465.39, with phase imbalance of approximately 0.90%.",
+  "uncertainty": "Low uncertainty. The leading prediction is clearly separated from the alternatives.",
+  "recommended_next_step": "Review the three-phase waveform and retrieve the technical guidance associated with Fault 12.",
+  "needs_more_data": false,
+  "sources": []
+}
