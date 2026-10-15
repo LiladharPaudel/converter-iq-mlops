@@ -1,0 +1,25 @@
+Phase disconnection (single-phase open circuit) in grid-connected converters
+
+A phase disconnection occurs when one of the three AC conductors between the converter and the grid stops carrying current. Typical causes are a blown line fuse, a contactor pole that failed to close, a loose or corroded terminal, or an open-circuit fault in both switching devices of one inverter leg. The current in the lost phase collapses to zero while the other two phases continue to carry the load, so the RMS of the affected phase drops below a few percent of nominal and the measured unbalance rises sharply, often above 30 percent. Unlike a short circuit, the condition does not trip overcurrent protection and the converter can run in this degraded state until a technician intervenes.
+
+Inspection order for a suspected phase disconnection: confirm which phase reads near-zero RMS, then check the line fuse and contactor pole for that phase with the converter de-energised. Next, check terminal torque and look for discolouration at the AC terminals. If the external path is intact, test the gate-driver output and the collector-emitter path of both devices in the matching inverter leg. Bond-wire lift-off inside a power module shows as an intermittent open that appears only at operating temperature, so a cold continuity check may pass.
+
+Grid unbalance
+
+Grid unbalance means the three phase voltages or currents differ in magnitude or are not 120 degrees apart. Unlike a disconnection, all three phases still carry current; the unbalance factor sits in the range of roughly 5 to 20 percent rather than approaching 100 percent. Causes are uneven single-phase loads on the feeder, a failed capacitor in a nearby power-factor-correction bank, or asymmetric line impedance after a conductor repair. The converter sees a negative-sequence component that produces a ripple in the DC-link voltage at twice the line frequency and increases thermal stress on the switching devices.
+
+Harmonic distortion
+
+Harmonic distortion is a corrupted waveform shape with the fundamental still present. Total harmonic distortion above 8 percent on a converter rated for 5 percent points to a failing output filter capacitor, a saturated filter inductor, or a resonance between the LCL filter and the grid impedance. Nonlinear loads sharing the point of common coupling, such as rectifier front ends and arc furnaces, inject fifth and seventh harmonics that the converter's current controller may amplify. Check the filter capacitor capacitance against its nameplate value and inspect the inductor core for signs of overheating.
+
+DC offset and DC-link abnormality
+
+A DC component in the AC phase current indicates asymmetry in switching, a current-sensor offset, or an open-circuit fault in a single switch (as opposed to both switches of a leg). If the upper switch is open, the positive half-cycle of that phase is clipped and the average current goes negative. Persistent DC injection into a transformer drives it toward saturation and raises its magnetising current, so most grid codes limit DC injection to 0.5 percent of rated current. On the DC-link side, electrolytic capacitors lose capacitance and gain equivalent series resistance as the electrolyte dries out; the symptom is a slow rise in voltage ripple with no change in switching behaviour. A 10 degree Celsius rise in hotspot temperature roughly halves expected capacitor life.
+
+Overcurrent and short-circuit faults
+
+A short-circuit fault shorts the DC link through one leg when the complementary device turns on. Current rises at a rate limited only by stray inductance and can exceed ten times the rated current within a few microseconds. Desaturation detection in the gate driver should turn the device off within 2 to 10 microseconds. Root causes include gate-oxide breakdown, shoot-through from insufficient dead time, and thermal runaway after repeated overload cycling. Grid-side overcurrent without device failure points to a downstream fault or a voltage sag that the current controller is trying to ride through.
+
+Sensor faults that mimic converter faults
+
+A stuck or disconnected current sensor reads a constant value regardless of load, and a gain fault scales one phase so that the three phase currents no longer sum to zero. Both can be misclassified as phase disconnection or unbalance. Cross-checking the sum of the three phase currents against zero is a cheap way to separate sensor faults from real electrical faults before dispatching a technician.

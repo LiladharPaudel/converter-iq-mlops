@@ -1,12 +1,16 @@
-ml/data/raw_records/*.json
-ml/data/raw_episodes/*.json
-ml/data/raw/*.json
-.DS_Store
-
-# mock-up
-.venv/
+# python
 __pycache__/
 *.pyc
+.venv/
 .pytest_cache/
+# node
 node_modules/
 dist/
+# misc
+.DS_Store
+.env
+# rag
+secrets/*
+!secrets/.gitkeep
+backend/rag_data/outputs/*.jsonl
+backend/rag_data/outputs/logs/*.log

@@ -5,3 +5,9 @@ numpy==2.1.3
 pydantic==2.10.3
 pytest==8.3.4
 httpx==0.28.1
+
+# RAG (milestone 2)
+google-genai>=1.20
+chromadb>=1.0
+langchain-text-splitters>=0.3
+pypdf>=5.0

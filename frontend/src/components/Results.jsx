@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import WaveformScope from './WaveformScope.jsx'
 import DiagnosisPanel from './DiagnosisPanel.jsx'
+import AssistantPanel from './AssistantPanel.jsx'
 
 const SPEEDS = [0.5, 1, 3]
 
@@ -82,6 +83,8 @@ export default function Results({ result, onReset }) {
             ))}
           </div>
         </div>
+
+        <AssistantPanel result={result} />
       </div>
 
       <DiagnosisPanel result={result} onReset={onReset} />

@@ -58,3 +58,38 @@ class ModelCard(BaseModel):
     input_shape: list[int]
     classes: list[str]
     note: str
+
+
+# ---- RAG (milestone 2) ----
+
+class RagStatus(BaseModel):
+    available: bool
+    collection: str
+    chunks: int
+    reason: str | None = None
+
+
+class ExplainRequest(BaseModel):
+    """The frontend sends back the verdict it already has, plus a question."""
+
+    verdict: Verdict
+    episode: EpisodeInfo
+    question: str = "Explain this verdict to a field technician and list what to inspect first."
+    mean_unbalance: float | None = None
+    mean_distortion: float | None = None
+    in_distribution: bool | None = None
+    k: int = Field(default=5, ge=1, le=10)
+
+
+class Passage(BaseModel):
+    source: str
+    chunk_index: int
+    distance: float
+    text: str
+
+
+class ExplainResponse(BaseModel):
+    answer: str
+    passages: list[Passage]
+    model: str
+    latency_ms: float

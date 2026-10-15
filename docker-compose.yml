@@ -2,9 +2,60 @@ services:
   api:
     build: ./backend
     ports: ["8000:8000"]
+    env_file: [.env]
     environment:
       - MODEL_VERSION=rules-v0
+      - CHROMADB_HOST=chromadb
+      - CHROMADB_PORT=8000
+      - GOOGLE_APPLICATION_CREDENTIALS=/secrets/llm-service-account.json
+    volumes:
+      - ./secrets:/secrets:ro
+      - ./backend/rag_data:/srv/rag_data
+    depends_on:
+      chromadb:
+        condition: service_healthy
+
   web:
     build: ./frontend
     ports: ["5173:80"]
     depends_on: [api]
+
+  chromadb:
+    image: chromadb/chroma:latest
+    ports: ["8001:8000"]            # host 8001 so it does not collide with the API
+    volumes:
+      - chroma-data:/data
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v2/heartbeat"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  # One-off indexing job. Same image as the api, different command.
+  #   docker compose run --rm rag-index                  # chunk + embed + load
+  #   docker compose run --rm rag-index --example        # end-to-end evidence
+  #   docker compose run --rm rag-index --chat
+  rag-index:
+    build: ./backend
+    profiles: ["index"]
+    env_file: [.env]
+    environment:
+      - CHROMADB_HOST=chromadb
+      - CHROMADB_PORT=8000
+      - GOOGLE_APPLICATION_CREDENTIALS=/secrets/llm-service-account.json
+    volumes:
+      - ./secrets:/secrets:ro
+      - ./backend/rag_data:/srv/rag_data
+    entrypoint: ["python", "-m", "app.rag.cli"]
+    command: ["--all"]
+    stdin_open: true
+    tty: true
+    depends_on:
+      chromadb:
+        condition: service_healthy
+
+volumes:
+  chroma-data:

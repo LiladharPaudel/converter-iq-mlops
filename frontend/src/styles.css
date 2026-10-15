@@ -260,3 +260,33 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
+
+/* ---------- assistant (RAG) ---------- */
+.assistant { padding: 14px 16px 12px; margin-top: 20px; }
+.assistant.off p { color: var(--ink-600); font-size: 13px; }
+.assistant code { font-family: var(--font-num); font-size: 12px; background: var(--mist-50); padding: 1px 5px; border-radius: 4px; }
+.assistant-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.assistant-head h3 { font-size: 14px; font-weight: 600; }
+.assistant-head small { color: var(--ink-400); font-size: 12px; }
+.assistant-empty { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 14px; background: var(--teal-100); border-radius: var(--r-md); }
+.assistant-empty p { color: var(--ink-600); font-size: 13px; }
+.assistant-thread { display: flex; flex-direction: column; gap: 12px; max-height: 420px; overflow-y: auto; }
+.turn .q { font-weight: 600; font-size: 13px; color: var(--navy-700); margin-bottom: 4px; }
+.turn .a { font-size: 13.5px; line-height: 1.55; padding: 10px 12px; background: var(--mist-50); border-radius: var(--r-md); }
+.turn .a p + p { margin-top: 8px; }
+.turn .a.pending { color: var(--ink-400); font-style: italic; }
+.turn .a.error { background: var(--fault-bg); color: var(--fault); }
+.a-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; color: var(--ink-400); font-size: 11.5px; }
+.sources { margin: 10px 0 0 18px; font-size: 12.5px; color: var(--ink-600); }
+.sources li + li { margin-top: 8px; }
+.sources li b { color: var(--ink-900); }
+.sources li .num { font-size: 11px; color: var(--ink-400); margin-left: 6px; }
+.sources li p { margin-top: 2px; }
+.suggestions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.chip { font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--mist-300); background: var(--white); color: var(--ink-600); }
+.chip:hover { border-color: var(--teal-500); color: var(--teal-600); }
+.chip:disabled { opacity: 0.5; cursor: default; }
+.ask { display: flex; gap: 8px; margin-top: 10px; }
+.ask input { flex: 1; font: inherit; padding: 7px 11px; border: 1px solid var(--mist-300); border-radius: var(--r-sm); background: var(--white); }
+.ask input:focus { outline: 2px solid var(--teal-500); outline-offset: -1px; border-color: transparent; }
+.assistant .footnote { padding: 10px 0 0; }

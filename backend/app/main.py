@@ -10,9 +10,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from . import features as F
 from .model import CLASSES, MODEL_VERSION, classify, in_distribution
 from .parsing import ParseError, parse_episode
-from .schemas import CycleResult, EpisodeInfo, ModelCard, PredictResponse, Verdict
+from .schemas import (CycleResult, EpisodeInfo, ExplainRequest, ExplainResponse, ModelCard,
+                      Passage, PredictResponse, RagStatus, Verdict)
 
-app = FastAPI(title="ConverterIQ API", version="0.2.0")
+app = FastAPI(title="ConverterIQ API", version="0.3.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -77,6 +78,53 @@ async def predict(file: UploadFile = File(...)):
         in_distribution=in_distribution(episode),
         inference_ms=round(ms, 2),
         model_version=MODEL_VERSION,
+    )
+
+
+# ---------------------------------------------------------------- RAG (MS2)
+# The RAG layer explains a verdict using passages retrieved from converter
+# papers and datasheets (see app/rag/). It is optional at runtime: if ChromaDB
+# or Vertex AI are not reachable the status endpoint says so and the UI hides
+# the assistant, while /api/predict keeps working.
+
+
+@app.get("/api/rag/status", response_model=RagStatus)
+def rag_status():
+    from .rag import vectordb
+
+    return RagStatus(**vectordb.status())
+
+
+@app.post("/api/rag/explain", response_model=ExplainResponse)
+def rag_explain(req: ExplainRequest):
+    from .rag import vectordb
+    from .rag.config import GENERATIVE_MODEL
+    from .rag.rag_chat import answer
+
+    if not vectordb.status()["available"]:
+        raise HTTPException(503, "The knowledge base is not loaded. Run the RAG indexing pipeline first.")
+
+    context = {
+        "label": req.verdict.label,
+        "healthy": req.verdict.healthy,
+        "confidence": req.verdict.confidence,
+        "alternatives": [a.model_dump() for a in req.verdict.alternatives],
+        "first_fault_cycle": req.verdict.first_fault_cycle,
+        "n_cycles": req.episode.n_cycles,
+        "mean_unbalance": req.mean_unbalance,
+        "mean_distortion": req.mean_distortion,
+        "in_distribution": req.in_distribution,
+    }
+    t0 = time.perf_counter()
+    try:
+        text, hits = answer(req.question, k=req.k, context=context)
+    except Exception as e:  # Vertex quota, auth, network
+        raise HTTPException(502, f"The assistant could not answer: {type(e).__name__}: {e}") from e
+    return ExplainResponse(
+        answer=text,
+        passages=[Passage(**h) for h in hits],
+        model=GENERATIVE_MODEL,
+        latency_ms=round((time.perf_counter() - t0) * 1000, 1),
     )
 
 
