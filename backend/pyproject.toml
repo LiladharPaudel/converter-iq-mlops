@@ -1,0 +1,14 @@
+[project]
+name = "converter-iq-backend"
+version = "0.1.0"
+description = "FastAPI backend for ConverterIQ mock-up"
+requires-python = ">=3.11"
+
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "numpy"
+]
+
+[tool.uv]
+python-preference = "system"
